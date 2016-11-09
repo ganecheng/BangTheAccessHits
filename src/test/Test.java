@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,33 +22,51 @@ public class Test
 
 	public static void main(String[] args) throws IOException
 	{
-		// 设置要刷的博客名字
-		String blogName = "hhxin635612026";
+		for (int times = 0; times < 100; times++)
+		{
+			System.out.println("当前循环次数" + times);
 
-		blogMap = CM.getBlogLinkList(blogName);
-		if (blogMap == null || blogMap.size() <= 0)
-		{
-			System.out.println("没有找到需要刷的博客链接");
-			return;
-		}
-		for (Map.Entry<String, String> entry : blogMap.entrySet())
-		{
-			System.out.println(entry.getKey());
-		}
+			// 设置要刷的博客名字
+			String blogName = "hhxin635612026";
 
-		// ipAndPortList = CM.getTotalList();
-		ipAndPortList = CM.getTotalListFromFile("D:/all.txt");
-		if (ipAndPortList == null || ipAndPortList.size() <= 0)
-		{
-			System.out.println("没有找到任何代理");
-			return;
-		}
+			blogMap = CM.getBlogLinkList(blogName);
 
-		FindProxy[] threadArr = new FindProxy[threadNum];
-		for (int i = 0; i < threadArr.length; i++)
-		{
-			threadArr[i] = new FindProxy(i);
-			threadArr[i].start();
+			if (blogMap == null || blogMap.size() <= 0)
+			{
+				System.out.println("没有找到需要刷的博客链接");
+				return;
+			}
+			for (Map.Entry<String, String> entry : blogMap.entrySet())
+			{
+				System.out.println(entry.getKey());
+			}
+
+			//1.从网上在线爬数据
+			ipAndPortList = CM.getTotalList();
+			//2.从本地列表中取数据(建议网上爬完数据后,就切换为本地列表)
+			//ipAndPortList = CM.getTotalListFromFile("D:/proxy.txt");
+			
+			if (ipAndPortList == null || ipAndPortList.size() <= 0)
+			{
+				System.out.println("没有找到任何代理");
+				return;
+			}
+
+			FindProxy[] threadArr = new FindProxy[threadNum];
+			for (int i = 0; i < threadArr.length; i++)
+			{
+				threadArr[i] = new FindProxy(i);
+				threadArr[i].start();
+			}
+
+			try
+			{
+				Thread.sleep(1000 * 60 * 30);
+			}
+			catch (InterruptedException e)
+			{
+				continue;
+			}
 		}
 
 	}

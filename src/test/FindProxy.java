@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +121,10 @@ public class FindProxy extends Thread
 			catch (IOException e)
 			{
 				continue;
+			}
+			finally
+			{
+				
 			}
 		}
 	}

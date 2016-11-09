@@ -156,6 +156,11 @@ public class CM
 			}
 		}
 
+		for (IpAndPort temp : totalList)
+		{
+			CM.writeToFile(temp.getIp() + ":" + temp.getPort());
+		}
+
 		return totalList;
 	}
 
